@@ -1,0 +1,15 @@
+# build output
+build/
+bin/*.pdb
+bin/*.lib
+bin/*.exp
+
+# build logs
+*.log
+*.err.log
+
+# local junk
+*.user
+.vs/
+.vscode/
+.idea/
