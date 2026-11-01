@@ -76,7 +76,7 @@ The same thing permanently (without launch arguments) — in `saved.json`:
 }
 ```
 
-Path to saved.json: `%LOCALAPPDATA%\GeometryDash\geode\mods\basu.input-buffer\saved.json` (compatible with the data of the .geode version of the mod).
+Path to saved.json: `%LOCALAPPDATA%\GeometryDash\geode\mods\basu.input-buffer\saved.json`.
 
 ## How it works
 
