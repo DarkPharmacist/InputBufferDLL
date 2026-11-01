@@ -8,7 +8,7 @@ This mod predicts the consequences of every click: on press (or release) a hidde
 
 1. Requirements: **Geometry Dash 2.2081 (Steam) with [Geode](https://geode-sdk.org) installed** — the DLL attaches to the `Geode.dll` already loaded into the game.
 2. Start the game the usual way and wait for the main menu (Geode must be fully loaded).
-3. Open **Process Hacker 2** → find the `GeometryDash.exe` process → right-click → *Miscellaneous → Inject DLL* → select `bin/input-buffer.dll`.
+3. Open **Process Hacker 2** → find the `GeometryDash.exe` process → right-click → *Miscellaneous → Inject DLL* → select `input-buffer.dll`.
 4. Done — the buffer is running. Nothing appears on screen (the UI has been cut); you can verify it in the Geode log (`geode/logs/geode.log` — look for the `[CBF-dll] injected, starting up` / `[CBF-dll] ready` lines).
 
 ## In-game controls
