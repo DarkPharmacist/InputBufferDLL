@@ -85,14 +85,6 @@ Path to saved.json: `%LOCALAPPDATA%\GeometryDash\geode\mods\basu.input-buffer\sa
 - Clicks arriving during a delay are shifted by the same amount — the press rhythm is preserved.
 - "Level memory" stores which delays saved you and where you died, and is taken into account when choosing (the `memory/` files in the save folder).
 
-## Differences from the .geode version
-
-Only the UI and the surrounding plumbing were removed — the buffer logic is identical to the original:
-
-- no mod menu, popups, buttons, console panel (F9), watermark, heat map or path preview (F10);
-- no update check and no auto-update;
-- Geode keybinds were replaced with direct key polling (`6`, `F11`);
-- settings via command line / `saved.json` instead of the menu.
 
 ## Building from source
 
