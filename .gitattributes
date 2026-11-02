@@ -1,12 +1,9 @@
-# text files: LF in repo, checked out as-is
 *.cpp text
 *.hpp text
 *.cmd text
 *.txt text
 *.md text
 
-# windows scripts keep CRLF
 *.cmd eol=crlf
 
-# binary
 *.dll binary
