@@ -20,9 +20,9 @@
 
 ## Demo
 
-
-https://github.com/user-attachments/assets/c2fc8614-7525-42be-9556-45e2272d2522
-
+<p align="center">
+  <video src="https://github.com/user-attachments/assets/c2fc8614-7525-42be-9556-45e2272d2522" width="80%" controls></video>
+</p>
 
 ## Features
 
