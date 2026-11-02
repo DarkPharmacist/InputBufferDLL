@@ -1,28 +1,12 @@
-// DLL build (Click Before Frames v2.99.4): the Geode-mod API shim.
-//
-// The original mod read its ~60 settings and saved values through Mod::get() (the mod's own
-// entry in Geode's mod list). An injected DLL has no such entry, so this shim replaces the
-// Mod interface the code uses with a small self-contained implementation:
-//
-//   * default values are taken from the original mod.json (unchanged);
-//   * values can be overridden on Geometry Dash's command line with  --cbf:key=value
-//     (booleans also as a bare  --cbf:key  flag, meaning true;  no/false/off/0 mean false);
-//   * saved values (stage, per-level profiles, mode ticks, memory markers) live in a plain
-//     JSON file next to the other mod saves: {geode mods save dir}/basu.input-buffer/saved.json
-//     - the same place the installed .geode version of the mod keeps its data.
-//
-// Everything else (the buffer itself, ghosts, prediction, level memory) is the original code.
 
 #include <Geode/Geode.hpp>
 #include <Geode/loader/Dirs.hpp>
 #include <Geode/loader/Loader.hpp>
 #include <Geode/loader/Log.hpp>
 #include <matjson.hpp>
-
 #ifdef GEODE_IS_WINDOWS
 #include <Windows.h>
 #endif
-
 #include <charconv>
 #include <cstdlib>
 #include <filesystem>
@@ -33,13 +17,8 @@
 #include <string>
 #include <string_view>
 #include <vector>
-
 using namespace geode::prelude;
-
 namespace cbfshim {
-
-    // ------------------------------------------------------------------ defaults
-    // Defaults exactly as in the original mod.json (v2.99.4).
     struct Entry {
         std::string_view type;
         std::string_view def;
@@ -115,10 +94,6 @@ namespace cbfshim {
         };
         return table;
     }
-
-    // ------------------------------------------------------------------ command line
-    // --cbf:key=value   (value can be quoted; booleans accept yes/true/on/1 and no/false/off/0)
-    // --cbf:key         (boolean flag, means true)
     static std::map<std::string, std::string, std::less<>>& launchArgs() {
         static std::map<std::string, std::string, std::less<>> args;
         static bool parsed = false;
@@ -139,7 +114,7 @@ namespace cbfshim {
                 arg.resize(static_cast<size_t>(len - 1));
                 WideCharToMultiByte(CP_UTF8, 0, argv[i], -1, arg.data(), len, nullptr, nullptr);
             }
-            constexpr std::string_view prefix = "--cbf:";
+            constexpr std::string_view prefix = "--ib:";
             if (arg.starts_with(prefix)) {
                 std::string_view body(arg);
                 body.remove_prefix(prefix.size());
@@ -162,7 +137,6 @@ namespace cbfshim {
     #endif
         return args;
     }
-
     static bool parseBool(std::string_view text, bool fallback) {
         auto lower = [](char c) { return c >= 'A' && c <= 'Z' ? char(c - 'A' + 'a') : c; };
         std::string v;
@@ -174,12 +148,9 @@ namespace cbfshim {
         if (v == "false" || v == "no" || v == "off" || v == "0") return false;
         return fallback;
     }
-
-    // ------------------------------------------------------------------ saved values
     static std::filesystem::path saveFile() {
-        return geode::dirs::getModsSaveDir() / "basu.input-buffer" / "saved.json";
+        return geode::dirs::getModsSaveDir() / "input-buffer" / "saved.json";
     }
-
     static matjson::Value& savedData() {
         static matjson::Value data = [] {
             std::ifstream in(saveFile());
@@ -193,12 +164,10 @@ namespace cbfshim {
         }();
         return data;
     }
-
     static std::mutex& savedMutex() {
         static std::mutex m;
         return m;
     }
-
     static void persistSaved() {
         std::lock_guard<std::mutex> lock(savedMutex());
         std::error_code ec;
@@ -207,11 +176,8 @@ namespace cbfshim {
         std::string dump = savedData().dump(4);
         std::ofstream(saveFile(), std::ios::trunc) << dump;
     }
-
-    // ------------------------------------------------------------------ Mod-like interface
     class ShimMod {
     public:
-        // settings: command line overrides the mod.json default; writes stay for this session
         bool getBool(std::string_view key) const {
             auto& args = launchArgs();
             auto it = args.find(key);
@@ -224,7 +190,6 @@ namespace cbfshim {
             }
             return tableBool(key);
         }
-
         int64_t getInt(std::string_view key) const {
             auto& args = launchArgs();
             auto it = args.find(key);
@@ -237,7 +202,6 @@ namespace cbfshim {
             }
             return tableInt(key);
         }
-
         double getFloat(std::string_view key) const {
             auto& args = launchArgs();
             auto it = args.find(key);
@@ -249,7 +213,6 @@ namespace cbfshim {
             }
             return tableFloat(key);
         }
-
         std::string getString(std::string_view key) const {
             auto& args = launchArgs();
             auto it = args.find(key);
@@ -258,19 +221,12 @@ namespace cbfshim {
             }
             return tableString(key);
         }
-
         void setBool(std::string_view key, bool value) {
             overridesBool[std::string(key)] = value;
         }
-
         void setInt(std::string_view key, int64_t value) {
             overridesInt[std::string(key)] = value;
         }
-
-        // saved values (saved.json, the same keys the .geode mod used).
-        // --cbf:key=value on the command line also overrides saved values (stage,
-        // per-mode-frames, mode-ticks-N, ...), so a launch line can fully configure
-        // what the .geode version kept in its saved data.
         bool hasSaved(std::string_view key) const {
             auto& args = launchArgs();
             if (args.find(key) != args.end()) {
@@ -279,11 +235,9 @@ namespace cbfshim {
             std::lock_guard<std::mutex> lock(savedMutex());
             return savedData().contains(key);
         }
-
         template <class T>
         T getSaved(std::string_view key, T def) const {
             {
-                // command line first
                 auto& args = launchArgs();
                 auto it = args.find(key);
                 if (it != args.end()) {
@@ -318,7 +272,6 @@ namespace cbfshim {
             }
             return def;
         }
-
         template <class T>
         void setSaved(std::string_view key, T const& value) {
             {
@@ -327,7 +280,6 @@ namespace cbfshim {
             }
             persistSaved();
         }
-
         matjson::Value getSavedJson(std::string_view key) const {
             std::lock_guard<std::mutex> lock(savedMutex());
             auto& data = savedData();
@@ -336,7 +288,6 @@ namespace cbfshim {
             }
             return matjson::Value(nullptr);
         }
-
         void setSavedJson(std::string_view key, matjson::Value value) {
             {
                 std::lock_guard<std::mutex> lock(savedMutex());
@@ -344,26 +295,21 @@ namespace cbfshim {
             }
             persistSaved();
         }
-
         std::filesystem::path getSaveDir() const {
             return saveFile().parent_path();
         }
-
     private:
         std::map<std::string, bool, std::less<>> overridesBool;
         std::map<std::string, int64_t, std::less<>> overridesInt;
-
         static const Entry* entry(std::string_view key) {
             auto& table = settingsTable();
             auto it = table.find(key);
             return it == table.end() ? nullptr : &it->second;
         }
-
         bool tableBool(std::string_view key) const {
             auto* e = entry(key);
             return e ? parseBool(e->def, false) : false;
         }
-
         int64_t tableInt(std::string_view key) const {
             auto* e = entry(key);
             if (!e) {
@@ -373,7 +319,6 @@ namespace cbfshim {
             auto [ptr, ec] = std::from_chars(e->def.data(), e->def.data() + e->def.size(), v);
             return ec == std::errc() ? v : 0;
         }
-
         double tableFloat(std::string_view key) const {
             auto* e = entry(key);
             if (!e) {
@@ -386,16 +331,13 @@ namespace cbfshim {
                 return 0.0;
             }
         }
-
         std::string tableString(std::string_view key) const {
             auto* e = entry(key);
             return e ? std::string(e->def) : std::string();
         }
     };
-
     static ShimMod& mod() {
         static ShimMod instance;
         return instance;
     }
-
-} // namespace cbfshim
+}
