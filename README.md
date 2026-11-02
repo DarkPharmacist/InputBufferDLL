@@ -12,8 +12,6 @@
 
 *Every click, simulated before it happens.*
 
-[Features](#-features) · [Installation](#-installation) · [Usage](#-usage) · [Configuration](#%EF%B8%8F-configuration) · [How It Works](#-how-it-works) · [Troubleshooting](#-troubleshooting) · [Building from Source](#%EF%B8%8F-building-from-source)
-
 </div>
 
 ---
