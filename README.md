@@ -20,9 +20,9 @@
 
 ## Demo
 
->  **[Video placeholder]** — drop a link to your visualization here (YouTube / MP4 / GIF):
->
-> `[Input Buffer in action — how the buffer delays a click and saves the attempt](https://example.com/input-buffer-demo)`
+
+https://github.com/user-attachments/assets/c2fc8614-7525-42be-9556-45e2272d2522
+
 
 ## Features
 
