@@ -4,7 +4,7 @@
 
 **A click-prediction buffer for Geometry Dash — delivered as a standalone DLL.**
 
-[![Version](https://img.shields.io/badge/version-0.1-blue)]()
+[![Version](https://img.shields.io/badge/version-0.2-blue)]()
 [![Game](https://img.shields.io/badge/Geometry%20Dash-2.2081-ff4757)]()
 [![Framework](https://img.shields.io/badge/Geode-5.11.2-9b59b6)]()
 [![Platform](https://img.shields.io/badge/platform-Windows-0078D6)]()
