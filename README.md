@@ -150,6 +150,6 @@ build.cmd         & rebuild -> build\input-buffer.dll
 
 <div align="center">
 
-**Input Buffer v0.1** · Windows · Geometry Dash 2.2081 · [Geode](https://geode-sdk.org)
+**Input Buffer v0.2** · Windows · Geometry Dash 2.2081 · [Geode](https://geode-sdk.org)
 
 </div>
