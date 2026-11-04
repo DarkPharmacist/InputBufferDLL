@@ -1,8 +1,10 @@
-<div align="center">
-
 # Input Buffer
 
-**A click-prediction buffer for Geometry Dash — delivered as a standalone DLL.**
+<div align="center">
+
+<h1>Input Buffer</h1>
+
+<p><strong>A click-prediction buffer for Geometry Dash — delivered as a standalone DLL.</strong></p>
 
 [![Version](https://img.shields.io/badge/version-0.2-blue)]()
 [![Game](https://img.shields.io/badge/Geometry%20Dash-2.2081-ff4757)]()
@@ -18,9 +20,12 @@
 
 ## Demo
 
-<img width="960" height="540" alt="input-buffer-demo" src="https://github.com/user-attachments/assets/3572d7cd-bed2-4d24-99fc-a1ff6425aa05" />
 <div align="center">
-    
+  <img width="960" height="540" alt="input-buffer-demo" src="https://github.com/user-attachments/assets/3572d7cd-bed2-4d24-99fc-a1ff6425aa05" />
+</div>
+
+---
+
 ## Features
 
 - **Click lookahead** — when you press (or release) a button, a hidden *ghost* copy of the player is simulated forward with your input. If the ghost dies, the input is retried with 1..N ticks of delay and delivered the moment it provably survives.
@@ -49,11 +54,11 @@ Keys only work inside a level and while the Geometry Dash window is focused.
 
 ## Configuration
 
-There is no UI — everything is configured via **game launch arguments** (Steam → game Properties → "Launch Options") or the `geode\mods\input-buffer\saved.json` file.
+There is no UI — everything is configured via **game launch arguments** (Steam → game Properties → "Launch Options") or the `geode/mods/input-buffer/saved.json` file.
 
 Format: `--ib:<key>=<value>`; booleans can be passed as a bare `--ib:<key>` (= true). Example:
 
-```
+```bash
 --ib:stage=6 --ib:custom-ticks=10 --ib:custom-wave-ticks=10 --ib:ship-max-delay=1
 ```
 
@@ -80,7 +85,7 @@ Precedence: **launch args → `saved.json` → built-in defaults.**
 
 > **Note:** `low-latency` (on by default) caps the window at 4 ticks — for `custom-ticks` above 4, add `--ib:low-latency=no`, and for big windows (from ~16 ticks) raise the search budget with `--ib:sim-budget-ms=30`. Example with a 64-tick window:
 >
-> ```
+> ```bash
 > --ib:stage=6 --ib:custom-ticks=64 --ib:custom-wave-ticks=64 --ib:low-latency=no --ib:sim-budget-ms=30
 > ```
 
@@ -88,7 +93,7 @@ Precedence: **launch args → `saved.json` → built-in defaults.**
 
 Per-mode frames give each of the 8 game modes its own slot — Cube, Ship, Ball, UFO, Wave, Robot, Spider, Swing (`mode-ticks-0` … `mode-ticks-7`). They override both the stage and the low-latency cap. Example — 10 ticks for every mode, 1 for the ship:
 
-```
+```bash
 --ib:per-mode-frames=true --ib:mode-ticks-0=10 --ib:mode-ticks-1=1 --ib:mode-ticks-2=10 --ib:mode-ticks-3=10 --ib:mode-ticks-4=10 --ib:mode-ticks-5=10 --ib:mode-ticks-6=10 --ib:mode-ticks-7=10
 ```
 
@@ -96,16 +101,16 @@ The same, permanently (no launch args), in `saved.json`:
 
 ```json
 {
-    "stage": 6,
-    "per-mode-frames": true,
-    "mode-ticks-0": 10,
-    "mode-ticks-1": 1,
-    "mode-ticks-2": 10,
-    "mode-ticks-3": 10,
-    "mode-ticks-4": 10,
-    "mode-ticks-5": 10,
-    "mode-ticks-6": 10,
-    "mode-ticks-7": 10
+  "stage": 6,
+  "per-mode-frames": true,
+  "mode-ticks-0": 10,
+  "mode-ticks-1": 1,
+  "mode-ticks-2": 10,
+  "mode-ticks-3": 10,
+  "mode-ticks-4": 10,
+  "mode-ticks-5": 10,
+  "mode-ticks-6": 10,
+  "mode-ticks-7": 10
 }
 ```
 
@@ -135,7 +140,7 @@ The same, permanently (no launch args), in `saved.json`:
 
 - **Nothing happens after injection** — check `geode/logs/geode.log` for the `[input-buffer]` lines; if they're missing, Geode wasn't fully loaded when you injected.
 - **Big window feels laggy** — raise `sim-budget-ms`, enable `performance-mode`, or drop the window size.
-- **Settings don't apply** — launch args take precedence over `saved.json`; check your Steam launch options..
+- **Settings don't apply** — launch args take precedence over `saved.json`; check your Steam launch options.
 
 ## Building from Source
 
@@ -143,9 +148,13 @@ The same, permanently (no launch args), in `saved.json`:
 
 ```cmd
 set GEODE_SDK=C:\path\to\geode-sdk\v1
-configure.cmd     & one-time setup
-build.cmd         & rebuild -> build\input-buffer.dll
+
+configure.cmd
+build.cmd
 ```
+
+- `configure.cmd` — one-time setup.
+- `build.cmd` — rebuild; outputs `build/input-buffer.dll`.
 
 ---
 
