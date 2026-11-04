@@ -21,14 +21,6 @@
 <img width="960" height="540" alt="input-buffer-demo" src="https://github.com/user-attachments/assets/3572d7cd-bed2-4d24-99fc-a1ff6425aa05" />
 <div align="center">
     
-<div align="center">
-  <video
-    src="https://github.com/user-attachments/assets/ffa9d40a-5f72-45fc-a1d2-16aade159632"
-    width="960"
-    controls>
-  </video>
-</div>
-
 ## Features
 
 - **Click lookahead** — when you press (or release) a button, a hidden *ghost* copy of the player is simulated forward with your input. If the ghost dies, the input is retried with 1..N ticks of delay and delivered the moment it provably survives.
