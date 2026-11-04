@@ -21,7 +21,13 @@
 <img width="960" height="540" alt="input-buffer-demo" src="https://github.com/user-attachments/assets/3572d7cd-bed2-4d24-99fc-a1ff6425aa05" />
 <div align="center">
     
-https://github.com/user-attachments/assets/c1cffcf3-e804-41da-8dd8-7fb305ef6d7d
+<div align="center">
+  <video
+    src="https://github.com/user-attachments/assets/ffa9d40a-5f72-45fc-a1d2-16aade159632"
+    width="960"
+    controls>
+  </video>
+</div>
 
 ## Features
 
