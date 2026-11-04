@@ -20,8 +20,8 @@
 
 <img width="960" height="540" alt="input-buffer-demo" src="https://github.com/user-attachments/assets/3572d7cd-bed2-4d24-99fc-a1ff6425aa05" />
 <div align="center">
-<img width="960" height="540" alt="input-buffer-demo" src="https://github.com/user-attachments/assets/c2fc8614-7525-42be-9556-45e2272d2522" />
-<div align="center">
+    
+https://github.com/user-attachments/assets/c1cffcf3-e804-41da-8dd8-7fb305ef6d7d
 
 ## Features
 
