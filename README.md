@@ -1,5 +1,3 @@
-# Input Buffer
-
 <div align="center">
 
 <h1>Input Buffer</h1>
